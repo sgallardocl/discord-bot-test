@@ -10,7 +10,7 @@
     "start": "tsc && node ./build/bot.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Sebastián Gallardo",
   "license": "ISC",
   "dependencies": {
     "discord.js": "^12.4.1"
