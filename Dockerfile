@@ -1,6 +1,8 @@
 FROM node:12.4-alpine
-WORKDIR /app
-ADD . /app
+
+WORKDIR /usr/src/app
+COPY package*.json ./
 RUN npm install
-EXPOSE 80
-CMD npm start
+COPY . .
+
+CMD [ "npm", "start" ]
