@@ -26,10 +26,10 @@ pipeline {
     stage("Build Configuration") {
       steps {
         script {
-          if (fileExists(".env")) {
-              sh "rm .env"
+          if (fileExists("./.env")) {
+              sh "rm ./.env"
           }
-          sh "mv .env.example .env"
+          sh "mv ./.env.example .env"
         }
       }
     }
