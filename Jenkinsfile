@@ -7,7 +7,7 @@ pipeline {
     REGISTRY="sgallardocl/$APP_NAME"
     CREDENTIAL_REGISTRY="DockerHub"
     TAG="latest"
-    IMAGE_NAME="$REGISTRY$TAG"
+    IMAGE_NAME="$REGISTRY:$TAG"
   }
 
   stages {
@@ -51,8 +51,12 @@ pipeline {
         branch "master"
       }
       steps {
-        sh "docker rmi $IMAGE_NAME"
         script {
+          def currentImage = docker.image("$IMAGE_NAME")
+          if (currentImage.exists()) {
+            sh "docker image rm $IMAGE_NAME --force"
+          }
+
           docker.withRegistry("", CREDENTIAL_REGISTRY) {
             def dockerImage = docker.build("$IMAGE_NAME")
             dockerImage.push()
@@ -70,8 +74,8 @@ pipeline {
         branch "master"
       }
       steps {
-        sh "docker stop $CONTAINER_NAME"
-        sh "docker rm -fv $CONTAINER_NAME"
+        //sh "docker stop $CONTAINER_NAME"
+        //sh "docker rm -fv $CONTAINER_NAME"
         script {
           docker.image("$IMAGE_NAME").withRun("-e BOT_TOKEN=$BOT_TOKEN -d -p 8081:80 --name $CONTAINER_NAME") { c ->
             sh "docker ps"
