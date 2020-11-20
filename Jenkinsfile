@@ -19,19 +19,30 @@ pipeline {
       }
       steps {
         checkout scm
-        sh """
-          rm .env \
-          mv .env.example .env
-        """
+        sh "mv .env.example .env"
+      }
+    }
+
+    stage("Build Configuration") {
+      steps {
+        script {
+          if (fileExists(".env")) {
+              sh "rm .env"
+          }
+          sh "mv .env.example .env"
+        }
       }
     }
 
     stage("Build Application") {
       steps {
-        sh """
-          npm install \
-          npm run build
-        """
+        sh "npm install"
+      }
+    }
+
+    stage("Build App") {
+      steps {
+        sh "npm run build"
       }
     }
 
