@@ -1,3 +1,5 @@
+def customImage
+
 pipeline {
   agent { dockerfile true }
 
@@ -52,36 +54,42 @@ pipeline {
       }
       steps {
         script {
-          def currentImage = docker.image("$IMAGE_NAME")
-          if (currentImage.exists()) {
-            sh "docker image rm $IMAGE_NAME --force"
-          }
+          customImage = docker.build("$IMAGE_NAME", "-f Dockerfile ./")
 
-          docker.withRegistry("", CREDENTIAL_REGISTRY) {
-            def dockerImage = docker.build("$IMAGE_NAME")
-            dockerImage.push()
-          }
+          // docker.withRegistry("", CREDENTIAL_REGISTRY) {
+          //   customImage.push("$TAG")
+          // }
+
+          // def currentImage = docker.image("$IMAGE_NAME")
+          // if (currentImage.exists()) {
+          //   sh "docker image rm $IMAGE_NAME --force"
+          // }
+
+          // docker.withRegistry("", CREDENTIAL_REGISTRY) {
+          //   def dockerImage = docker.build("$IMAGE_NAME")
+          //   dockerImage.push()
+          // }
         }
       }
     }
 
-    stage("Run Image") {
-      environment {
-        BOT_TOKEN=crendentials("BOT_TOKEN")
-        CONTAINER_NAME="$APP_NAME-container"
-      }
-      when {
-        branch "master"
-      }
-      steps {
-        //sh "docker stop $CONTAINER_NAME"
-        //sh "docker rm -fv $CONTAINER_NAME"
-        script {
-          docker.image("$IMAGE_NAME").withRun("-e BOT_TOKEN=$BOT_TOKEN -d -p 8081:80 --name $CONTAINER_NAME") { c ->
-            sh "docker ps"
-          }
-        }
-      }
-    }
+    // stage("Run Image") {
+    //   environment {
+    //     BOT_TOKEN=crendentials("BOT_TOKEN")
+    //     CONTAINER_NAME="$APP_NAME-container"
+    //   }
+    //   when {
+    //     branch "master"
+    //   }
+    //   steps {
+    //     //sh "docker stop $CONTAINER_NAME"
+    //     //sh "docker rm -fv $CONTAINER_NAME"
+    //     script {
+    //       docker.image("$IMAGE_NAME").withRun("-e BOT_TOKEN=$BOT_TOKEN -d -p 8081:80 --name $CONTAINER_NAME") { c ->
+    //         sh "docker ps"
+    //       }
+    //     }
+    //   }
+    // }
   }
 }
