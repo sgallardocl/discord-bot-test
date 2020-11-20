@@ -2,6 +2,7 @@ pipeline {
   agent { dockerfile true }
 
   environment {
+    HOME="."
     APP_NAME="node-discord-bot"
     REGISTRY="sgallardocl/$APP_NAME"
     CREDENTIAL_REGISTRY="DockerHub"
@@ -33,7 +34,7 @@ pipeline {
       }
     }
 
-    stage("Build Application") {
+    stage("Install modules") {
       steps {
         sh "npm install"
       }
