@@ -2,7 +2,6 @@ def customImage
 
 pipeline {
   agent {
-    label 'docker'
     docker { image 'node:12.4-alpine' }
   }
 
