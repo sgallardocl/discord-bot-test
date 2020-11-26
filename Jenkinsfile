@@ -57,7 +57,7 @@ pipeline {
       }
       steps {
         script {
-          sh "echo $USER"
+          sh "docker ps"
           // customImage = docker.build("$IMAGE_NAME", "-f Dockerfile ./")
 
           // docker.withRegistry("", CREDENTIAL_REGISTRY) {
