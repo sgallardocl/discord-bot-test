@@ -56,8 +56,9 @@ pipeline {
         branch "master"
       }
       steps {
-        script {
-          sh "docker ps"
+        sh "docker ps"
+        //script {
+
           // customImage = docker.build("$IMAGE_NAME", "-f Dockerfile ./")
 
           // docker.withRegistry("", CREDENTIAL_REGISTRY) {
@@ -73,7 +74,7 @@ pipeline {
           //   def dockerImage = docker.build("$IMAGE_NAME")
           //   dockerImage.push()
           // }
-        }
+        //}
       }
     }
 
