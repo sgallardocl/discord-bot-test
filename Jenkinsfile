@@ -56,7 +56,7 @@ pipeline {
         branch "master"
       }
       steps {
-        sh "docker ps"
+        sh "docker version"
         //script {
 
           // customImage = docker.build("$IMAGE_NAME", "-f Dockerfile ./")
