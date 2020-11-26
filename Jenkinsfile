@@ -57,7 +57,8 @@ pipeline {
       }
       steps {
         script {
-          customImage = docker.build("$IMAGE_NAME", "-f Dockerfile ./")
+          sh "w"
+          // customImage = docker.build("$IMAGE_NAME", "-f Dockerfile ./")
 
           // docker.withRegistry("", CREDENTIAL_REGISTRY) {
           //   customImage.push("$TAG")
