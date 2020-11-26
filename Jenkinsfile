@@ -1,7 +1,10 @@
 def customImage
 
 pipeline {
-  agent { dockerfile true }
+  agent {
+    // dockerfile true
+    docker { image 'node:12.4-alpine' }
+  }
 
   environment {
     HOME="."
